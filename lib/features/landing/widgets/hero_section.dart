@@ -84,7 +84,7 @@ class HeroSection extends StatelessWidget {
           // ── Content ──
           Padding(
             padding: EdgeInsets.only(
-              top: isMobile ? 100 : 120,
+              top: isMobile ? MediaQuery.paddingOf(context).top + 24 : 120,
               bottom: isMobile ? 60 : 80,
             ),
             child: ResponsiveContainer(
@@ -124,6 +124,16 @@ class _HeroContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Mobile Logo
+        if (isMobile) ...[
+          Image.asset(
+            'assets/images/logo-dark.png',
+            height: 64,
+            fit: BoxFit.contain,
+          ),
+          const SizedBox(height: 24),
+        ],
+
         // Eyebrow
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
