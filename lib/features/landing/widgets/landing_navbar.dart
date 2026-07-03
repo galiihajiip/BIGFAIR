@@ -26,12 +26,15 @@ class _LandingNavbarState extends State<LandingNavbar> {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final isMobile = AppTheme.isMobile(width);
+    final topPadding = MediaQuery.paddingOf(context).top;
+    final height = 80.0 + (isMobile ? topPadding : 0.0);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          height: 80,
+          height: height,
+          padding: EdgeInsets.only(top: isMobile ? topPadding : 0.0),
           decoration: BoxDecoration(
             color: AppColors.surface.withValues(alpha: 0.82),
             border: const Border(
@@ -87,16 +90,6 @@ class _LandingNavbarState extends State<LandingNavbar> {
                         ),
                       ],
 
-                      // ── Mobile menu button ──
-                      if (isMobile)
-                        IconButton(
-                          icon: Icon(
-                            _menuOpen ? Icons.close : Icons.menu_rounded,
-                            color: AppColors.onSurface,
-                          ),
-                          onPressed: () =>
-                              setState(() => _menuOpen = !_menuOpen),
-                        ),
                     ],
                   ),
                 ),
@@ -104,58 +97,6 @@ class _LandingNavbarState extends State<LandingNavbar> {
             ),
           ),
         ),
-
-        // ── Mobile dropdown ──
-        if (isMobile)
-          AnimatedCrossFade(
-            firstChild: const SizedBox.shrink(),
-            secondChild: Container(
-              width: double.infinity,
-              color: AppColors.surface.withValues(alpha: 0.95),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ..._links.map((label) => InkWell(
-                        onTap: () {
-                          setState(() => _menuOpen = false);
-                          widget.onNavTap?.call(label.toLowerCase());
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          child: Text(
-                            label,
-                            style: GoogleFonts.sora(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.onSurfaceVariant,
-                            ),
-                          ),
-                        ),
-                      )),
-                  const SizedBox(height: 12),
-                  Row(
-                    children: [
-                      _GhostButton(label: 'Masuk', onTap: () {
-                        launchUrl(Uri.parse('http://localhost:8000/admin/login'));
-                      }),
-                      const SizedBox(width: 8),
-                      _FilledNavButton(
-                        label: 'Lihat Event',
-                        onTap: () {
-                          setState(() => _menuOpen = false);
-                          widget.onNavTap?.call('event');
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            crossFadeState:
-                _menuOpen ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-            duration: const Duration(milliseconds: 250),
-          ),
       ],
     );
   }
