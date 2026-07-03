@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_theme.dart';
@@ -57,14 +58,10 @@ class _LandingNavbarState extends State<LandingNavbar> {
                   child: Row(
                     children: [
                       // ── Logo ──
-                      Text(
-                        'B1GFAIR',
-                        style: GoogleFonts.sora(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w800,
-                          color: AppColors.primary,
-                          letterSpacing: -0.5,
-                        ),
+                      Image.asset(
+                        'assets/images/logo-dark.png',
+                        height: 56,
+                        fit: BoxFit.contain,
                       ),
                       const Spacer(),
 
@@ -78,7 +75,9 @@ class _LandingNavbarState extends State<LandingNavbar> {
                         const SizedBox(width: 16),
                         _GhostButton(
                           label: 'Masuk',
-                          onTap: () {},
+                          onTap: () {
+                            launchUrl(Uri.parse('http://localhost:8000/admin/login'));
+                          },
                         ),
                         const SizedBox(width: 8),
                         _FilledNavButton(
@@ -137,7 +136,9 @@ class _LandingNavbarState extends State<LandingNavbar> {
                   const SizedBox(height: 12),
                   Row(
                     children: [
-                      _GhostButton(label: 'Masuk', onTap: () {}),
+                      _GhostButton(label: 'Masuk', onTap: () {
+                        launchUrl(Uri.parse('http://localhost:8000/admin/login'));
+                      }),
                       const SizedBox(width: 8),
                       _FilledNavButton(
                         label: 'Lihat Event',

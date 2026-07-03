@@ -142,7 +142,7 @@ class _HeroContent extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                'EVENT FESTIVAL EDUKASI INDONESIA',
+                'EVENT FESTIVAL EDUKASI NASIONAL',
                 style: AppTextStyles.labelMd.copyWith(
                   color: AppColors.primary,
                   letterSpacing: 1.2,
@@ -299,13 +299,10 @@ class _PhoneMockup extends StatelessWidget {
                       color: AppColors.surfaceContainerLow,
                       child: Row(
                         children: [
-                          Text(
-                            'B1GFAIR',
-                            style: GoogleFonts.sora(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w800,
-                              color: AppColors.primary,
-                            ),
+                          Image.asset(
+                            'assets/images/logo-dark.png',
+                            height: 20,
+                            fit: BoxFit.contain,
                           ),
                           const Spacer(),
                           const Icon(

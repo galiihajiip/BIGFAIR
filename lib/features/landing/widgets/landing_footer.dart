@@ -72,13 +72,10 @@ class _LogoBlock extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'B1GFAIR',
-          style: GoogleFonts.sora(
-            fontSize: 24,
-            fontWeight: FontWeight.w800,
-            color: AppColors.primary,
-          ),
+        Image.asset(
+          'assets/images/logo-dark.png',
+          height: 72,
+          fit: BoxFit.contain,
         ),
         const SizedBox(height: 12),
         Text(
