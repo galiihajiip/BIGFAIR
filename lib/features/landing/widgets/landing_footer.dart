@@ -8,7 +8,9 @@ import '../../../shared/widgets/responsive_container.dart';
 
 /// Landing page footer with logo, columns, and copyright.
 class LandingFooter extends StatelessWidget {
-  const LandingFooter({super.key});
+  const LandingFooter({super.key, this.onNavTap});
+
+  final void Function(String section)? onNavTap;
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +30,16 @@ class LandingFooter extends StatelessWidget {
                     children: [
                       _LogoBlock(),
                       const SizedBox(height: 32),
-                      ..._columns
-                          .map((col) => Padding(
-                                padding: const EdgeInsets.only(bottom: 24),
-                                child: _FooterColumn(data: col),
-                              ))
-                          ,
+                      Wrap(
+                        spacing: 24,
+                        runSpacing: 32,
+                        children: _columns
+                            .map((col) => SizedBox(
+                                  width: width * 0.4,
+                                  child: _FooterColumn(data: col, onNavTap: onNavTap),
+                                ))
+                            .toList(),
+                      ),
                     ],
                   )
                 : Row(
@@ -43,7 +49,7 @@ class LandingFooter extends StatelessWidget {
                       ..._columns
                           .map((col) => Expanded(
                                 flex: 2,
-                                child: _FooterColumn(data: col),
+                                child: _FooterColumn(data: col, onNavTap: onNavTap),
                               ))
                           ,
                     ],
@@ -116,8 +122,9 @@ const _columns = [
 ];
 
 class _FooterColumn extends StatelessWidget {
-  const _FooterColumn({required this.data});
+  const _FooterColumn({required this.data, this.onNavTap});
   final _FooterColumnData data;
+  final void Function(String section)? onNavTap;
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +147,11 @@ class _FooterColumn extends StatelessWidget {
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  if (onNavTap != null) {
+                    onNavTap!(link.toLowerCase());
+                  }
+                },
                 child: Text(
                   link,
                   style: AppTextStyles.bodySm.copyWith(
